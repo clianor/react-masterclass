@@ -147,10 +147,16 @@ function Coin() {
 	const { isLoading: infoLoading, data: infoData } = useQuery<InfoData>(
 		['info', coinId],
 		() => fetchCoinInfo(coinId as string),
+		{
+			staleTime: 60 * 1000,
+		},
 	);
 	const { isLoading: tickersLoading, data: tickersData } = useQuery<PriceData>(
 		['price', coinId],
 		() => fetchCoinTickers(coinId as string),
+		{
+			staleTime: 60 * 1000,
+		},
 	);
 
 	const loading = useMemo(
