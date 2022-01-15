@@ -138,11 +138,7 @@ interface TickersData {
 	};
 }
 
-interface ICoinProps {
-	isDark: boolean;
-}
-
-function Coin({ isDark }: ICoinProps) {
+function Coin() {
 	const priceMatch = useMatch('/:coinId/price');
 	const chartMatch = useMatch('/:coinId/chart');
 	const { coinId } = useParams<keyof RouteParams>();
@@ -222,10 +218,7 @@ function Coin({ isDark }: ICoinProps) {
 
 					<Routes>
 						<Route path="price" element={<Price />} />
-						<Route
-							path="chart"
-							element={<Chart isDark={isDark} coinId={coinId as string} />}
-						/>
+						<Route path="chart" element={<Chart coinId={coinId as string} />} />
 					</Routes>
 				</>
 			)}
