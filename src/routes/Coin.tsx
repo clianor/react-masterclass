@@ -103,7 +103,7 @@ interface InfoData {
 	last_data_at: string;
 }
 
-interface PriceData {
+interface TickersData {
 	id: string;
 	name: string;
 	symbol: string;
@@ -151,8 +151,8 @@ function Coin() {
 			staleTime: 60 * 1000,
 		},
 	);
-	const { isLoading: tickersLoading, data: tickersData } = useQuery<PriceData>(
-		['price', coinId],
+	const { isLoading: tickersLoading, data: tickersData } = useQuery<TickersData>(
+		['tickers', coinId],
 		() => fetchCoinTickers(coinId as string),
 		{
 			staleTime: 60 * 1000,
