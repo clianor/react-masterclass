@@ -4,12 +4,13 @@ import DragabbleCard from './DragabbleCard';
 
 const Wrapper = styled.div`
 	width: 300px;
-	padding: 10px 10px 20px;
+	padding-top: 10px;
 	background-color: ${(props) => props.theme.boardColor};
 	border-radius: 5px;
 	min-height: 300px;
 	display: flex;
 	flex-direction: column;
+	overflow: hidden;
 `;
 
 const Title = styled.h2`
@@ -26,9 +27,14 @@ interface IAreaProps {
 
 const Area = styled.div<IAreaProps>`
 	background-color: ${(props) =>
-		props.isDraggingOver ? 'pink' : props.isDraggingFromThis ? 'red' : 'blue'};
+		props.isDraggingOver
+			? '#dfe6e9'
+			: props.isDraggingFromThis
+			? '#b2bec3'
+			: 'transparent'};
 	flex-grow: 1;
 	transition: background-color 0.3s ease-in-out;
+	padding: 20px;
 `;
 
 interface IBoardProps {
