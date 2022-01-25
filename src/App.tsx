@@ -28,7 +28,7 @@ function App() {
 
 	const onDragEnd = useCallback(
 		(info: DropResult) => {
-			const { destination, draggableId, source } = info;
+			const { destination, source } = info;
 			if (!destination) return;
 
 			if (destination?.droppableId === source.droppableId) {
