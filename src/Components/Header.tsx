@@ -1,5 +1,5 @@
 import { motion, useAnimation, useViewportScroll } from 'framer-motion';
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { Link, useMatch } from 'react-router-dom';
 import styled from 'styled-components';
 
@@ -105,6 +105,7 @@ const navVariants = {
 };
 
 function Header() {
+	const inputRef = useRef<HTMLInputElement>(null);
 	const homeMatch = useMatch('/');
 	const tvMatch = useMatch('/tv');
 	const [searchOpen, setSearchOpen] = useState(false);
@@ -118,9 +119,17 @@ function Header() {
 				scaleX: 0,
 			});
 		} else {
+			inputRef.current?.focus();
 			inputAnimation.start({ scaleX: 1 });
 		}
 		setSearchOpen((prev) => !prev);
+	};
+
+	const onBlurSearch = () => {
+		inputAnimation.start({
+			scaleX: 0,
+		});
+		setSearchOpen(false);
 	};
 
 	useEffect(() => {
@@ -172,6 +181,8 @@ function Header() {
 					</motion.svg>
 					<Input
 						type="text"
+						ref={inputRef}
+						onBlur={onBlurSearch}
 						animate={inputAnimation}
 						initial={{ scaleX: 0 }}
 						transition={{ type: 'linear' }}
