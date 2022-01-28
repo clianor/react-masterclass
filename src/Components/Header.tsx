@@ -63,7 +63,7 @@ const Circle = styled(motion.span)`
 	position: absolute;
 	width: 5px;
 	height: 5px;
-	border-radius: 5px;
+	border-radius: 2.5px;
 	bottom: -5px;
 	left: 0;
 	right: 0;
@@ -74,9 +74,8 @@ const Circle = styled(motion.span)`
 const Input = styled(motion.input)`
 	transform-origin: right center;
 	position: absolute;
-	right: 0px;
-	padding: 5px 10px;
-	padding-left: 40px;
+	right: 0;
+	padding: 5px 10px 5px 40px;
 	z-index: -1;
 	color: white;
 	font-size: 16px;
@@ -168,7 +167,8 @@ function Header() {
 						<path
 							fillRule="evenodd"
 							d="M8 4a4 4 0 100 8 4 4 0 000-8zM2 8a6 6 0 1110.89 3.476l4.817 4.817a1 1 0 01-1.414 1.414l-4.816-4.816A6 6 0 012 8z"
-							clipRule="evenodd"></path>
+							clipRule="evenodd"
+						/>
 					</motion.svg>
 					<Input
 						type="text"
