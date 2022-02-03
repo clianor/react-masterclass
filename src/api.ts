@@ -25,3 +25,18 @@ export function getMovies() {
 		response.json(),
 	);
 }
+
+export interface IGetSearchedMulti {
+	page: number;
+	results: IMovie & {
+		media_type: 'movie' | 'tv';
+	};
+	total_pages: number;
+	total_results: number;
+}
+
+export function getSearchedMulti(query: string) {
+	return fetch(
+		encodeURI(`${BASE_PATH}/search/multi?api_key=${API_KEY}&query=${query}`),
+	).then((response) => response.json());
+}

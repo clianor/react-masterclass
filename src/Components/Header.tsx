@@ -1,6 +1,7 @@
 import { motion, useAnimation, useViewportScroll } from 'framer-motion';
 import { useEffect, useRef, useState } from 'react';
-import { Link, useMatch } from 'react-router-dom';
+import { useForm } from 'react-hook-form';
+import { Link, useMatch, useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 
 const Nav = styled(motion.nav)`
@@ -49,7 +50,7 @@ const Item = styled.li`
 	}
 `;
 
-const Search = styled.span`
+const Search = styled.form`
 	color: white;
 	display: flex;
 	align-items: center;
@@ -81,6 +82,9 @@ const Input = styled(motion.input)`
 	font-size: 16px;
 	background-color: transparent;
 	border: 1px solid ${(props) => props.theme.white.lighter};
+	&:focus {
+		outline: none;
+	}
 `;
 
 const logoVariants = {
@@ -104,6 +108,10 @@ const navVariants = {
 	},
 };
 
+interface IForm {
+	keyword: string;
+}
+
 function Header() {
 	const inputRef = useRef<HTMLInputElement>(null);
 	const homeMatch = useMatch('/');
@@ -112,6 +120,13 @@ function Header() {
 	const inputAnimation = useAnimation();
 	const navAnimation = useAnimation();
 	const { scrollY } = useViewportScroll();
+	const navigate = useNavigate();
+	const { register, handleSubmit } = useForm<IForm>();
+	const searchInputRegister = register('keyword', { required: true, minLength: 2 });
+
+	const onValid = (data: IForm) => {
+		navigate(`/search?keyword=${data.keyword}`);
+	};
 
 	const toggleSearch = () => {
 		if (searchOpen) {
@@ -125,7 +140,8 @@ function Header() {
 		setSearchOpen((prev) => !prev);
 	};
 
-	const onBlurSearch = () => {
+	const onBlurSearch = (event: React.FocusEvent<HTMLInputElement>) => {
+		searchInputRegister.onBlur(event);
 		inputAnimation.start({
 			scaleX: 0,
 		});
@@ -165,7 +181,7 @@ function Header() {
 				</Items>
 			</Col>
 			<Col>
-				<Search>
+				<Search onSubmit={handleSubmit(onValid)}>
 					<motion.svg
 						onClick={toggleSearch}
 						animate={{ x: searchOpen ? -185 : 0 }}
@@ -180,8 +196,14 @@ function Header() {
 						/>
 					</motion.svg>
 					<Input
+						ref={(e) => {
+							searchInputRegister.ref(e);
+							// @ts-ignore
+							inputRef.current = e;
+						}}
 						type="text"
-						ref={inputRef}
+						name={searchInputRegister.name}
+						onChange={searchInputRegister.onChange}
 						onBlur={onBlurSearch}
 						animate={inputAnimation}
 						initial={{ scaleX: 0 }}

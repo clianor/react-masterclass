@@ -1,6 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { QueryClient, QueryClientProvider } from 'react-query';
+import { ReactQueryDevtools } from 'react-query/devtools';
 import { RecoilRoot } from 'recoil';
 import { createGlobalStyle, ThemeProvider } from 'styled-components';
 import App from './App';
@@ -24,7 +25,6 @@ const GlobalStyle = createGlobalStyle`
     margin: 0;
     padding: 0;
     border: 0;
-    font-size: 100%;
     font: inherit;
     vertical-align: baseline;
   }
@@ -48,7 +48,6 @@ const GlobalStyle = createGlobalStyle`
   }
   blockquote:before, blockquote:after,
   q:before, q:after {
-    content: '';
     content: none;
   }
   table {
@@ -81,6 +80,7 @@ ReactDOM.render(
 					<GlobalStyle />
 					<App />
 				</ThemeProvider>
+				<ReactQueryDevtools initialIsOpen={true} />
 			</QueryClientProvider>
 		</RecoilRoot>
 	</React.StrictMode>,
